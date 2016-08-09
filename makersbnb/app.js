@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -15,11 +16,13 @@ var userModels = require('./models/users');
 var Sequelize = require('sequelize')
 // var connection = new Sequelize('makersbnb_dev', 'thadycondon', 'password')
 
-,sequelize = new Sequelize('makersbnb_dev', 'thadycondon', 'password', {
+,sequelize = new Sequelize('makersbnb_dev', 'NNS', 'password', {
      dialect: "postgres", // or 'sqlite', 'postgres', 'mariadb'
      port:    5432, // or 5432 (for postgres)
    });
-
+app.listen(3000, function(){
+  console.log("Started server")
+})
 var User = sequelize.define('user', {
   username: Sequelize.STRING,
   password: Sequelize.STRING
@@ -39,9 +42,9 @@ sequelize.sync().then(function() {
   //   username: 'THADY',
   //   password: '12345'
   // })
-  User.findAll().then(function(users){
-    console.log(users);
-  })
+  // User.findAll().then(function(users){
+  //   console.log(users);
+  // })
 })
 
 var Space = sequelize.define('space', {
@@ -54,18 +57,18 @@ User.hasMany(Space);
 Space.belongsTo(User)
 
 sequelize.sync().then(function() {
-
+  //
   // Space.create ({
   //
   //
   //   name: 'The entire Shard',
   //   location: 'Somewhere in London',
   //   pricePerNight: "400000000",
-  //   userId: 4
+  //   // userId: 1
   // })
-  Space.findAll().then(function(spaces){
-    console.log(spaces);
-      });
+  // Space.findAll().then(function(spaces){
+  //   console.log(spaces);
+  //     });
 })
 
 
